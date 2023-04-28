@@ -1,0 +1,49 @@
+.pagination .active_pagination {
+  background: linear-gradient(180deg, #EFDFD6 0%, #DFD5CF 52.6%, #e8d1c4 100%);
+  border: 1px solid #ACACAC;
+}
+
+.uk-form-label {
+  display: inline-block;
+  font-size:15px;
+  margin-bottom:5px;
+}
+
+.uk-modal-body {
+  padding: 20px 30px;
+}
+
+.uk-text-small {
+  font-size:15px;
+}
+
+.uk-modal-title {
+  font-size:24px;
+}
+
+mark {
+  background-color: #FAF594;
+}
+
+.uk-text-danger {
+  padding-left: 10px;
+  margin-top: 3px;
+}
+.uk-form-danger {
+  border-radius:7px;
+}
+
+.uk-grid-divider {
+  margin-left:0;
+}
+
+.uk-text-warning {
+  padding-left:10px;
+  margin-top:3px;
+  color: #FFC48D;
+}
+
+.uk-form-warning {
+  border-color:#F5A052;
+  color:#FFC48D;
+}
