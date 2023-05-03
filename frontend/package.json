@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "my-install": "npm install && yarn add uikit --prefix public/uikit",
-    "build": "vue-cli-service build --modern",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
