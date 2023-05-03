@@ -1,23 +1,18 @@
 <template>
   <div>
-    <v_header />
+    <Header />
     <div style="margin-bottom:70px;" class="uk-container">
       <hr style="margin-top:15px;margin-bottom:40px;" class="uk-grid-divider">
-      <div class="uk-margin uk-text-right">
-        <button id="edit_title_btn" v-visible="!wysiwyg_visibility" @click="wysiwyg_visibility = !wysiwyg_visibility" class="uk-button uk-button-default">Изменить заголовок</button>
+      <div class="uk-margin uk-text-right uk-position-relative">
+        <button id="edit_title_btn" v-visible="!wysiwyg_visibility" @click="wysiwyg_visibility = !wysiwyg_visibility"
+                class="uk-button uk-button-default uk-border-rounded">123Изменить заголовок</button>
       </div>
 
-      <div>
-          <button class="uk-button uk-button-default" @click="pingRequest">Ping123</button>
-      </div>
+      <tiptap style="margin-left: -19.2px;" :active.sync="wysiwyg_visibility" @change_wysiwyg_visibility="change_wysiwyg_visibility" class="uk-margin-medium-bottom" />
 
-      <tiptap style="position:absolute;margin-left: -19.2px;margin-top: -62px;" @change_wysiwyg_visibility="change_wysiwyg_visibility" class="uk-margin-bottom" v-if="wysiwyg_visibility" />
-
-      <div v-visible="!wysiwyg_visibility" class="content">
-        <div v-html="content.find(item => item.block === 'main_content').content"></div>
-      </div>
-
-<!--      <wysiwyg v-if="summernote_visibility" style="width:1280px;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 0px 5px 5px rgba(0, 0, 0, 0.25);background:white;margin-top:300px;z-index:9;position:absolute" v-model="main_content" />-->
+<!--      <div v-visible="!wysiwyg_visibility" class="page-content uk-margin-medium-bottom uk-border-rounded">-->
+<!--        <div v-html="content.find(item => item.block === 'main_content').content"></div>-->
+<!--      </div>-->
 
 <!--      <div v-html="main_content"></div>-->
 
@@ -32,8 +27,6 @@
           <div v-else><a href="#modal_login" uk-toggle> Авторизуйтесь!</a> Чтобы кому-то позвонить!</div>
         </div>
       </div>
-
-
 
       <devices_table :devices="devices" @get_item="get_item" />
       <Paginate v-if="$store.getters.pagination_response && $store.getters.pagination_response.meta.last_page !== 1"
@@ -52,7 +45,6 @@
       <div class="uk-flex-center" uk-grid>
         <div>Telegram: @ramazon_sangov</div>
         <div>Github: https://github.com/RasankRam</div>
-        <div>VK: https://vk.com/id516636049</div>
       </div>
     </div>
 
@@ -72,7 +64,7 @@
 
 <script>
 import Tiptap from '../components/Tiptap.vue'
-import v_header from '../components/v_header'
+import Header from '../components/Header.vue'
 import modal_update from '../components/modal_update_normal'
 import modal_create from '../components/modal_create'
 import devices_table from '../components/devices_table'
@@ -157,17 +149,22 @@ export default {
   components: {
     modal_update_profile,
     modal_register, modal_login, Tiptap,
-    modal_delete, devices_table, v_header, modal_create, modal_update,
+    modal_delete, devices_table, Header, modal_create, modal_update,
     modal_create_msisdn, modal_call
   },
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 #edit_title_btn {
-  background: rgb(203, 211, 242);
-  border-radius: 20px;
+  //background: rgb(203, 211, 242);
+  background: #badaff;
+  font-size: 16px;
+  position: absolute;
+  right: 40px;
+  top: -20px;
   border: 1px solid rgb(156, 156, 156);
+  z-index: 100;
 }
 #edit_title_btn:hover {
   background: #d8ddec;
@@ -191,17 +188,8 @@ export default {
   background: linear-gradient(180deg, #6D8BF5 0%, #5F7FEE 100%);
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(0, 0, 0, 0.25);
 }
-
-/* Tiptap styles */
-::v-deep {
-  /* Basic editor styles */
-  .ProseMirror {
-    > * + * {
-      margin-top: 0.75em;
-    }
-  }
-  .ProseMirror-focused {
-    outline: 0;
-  }
+.page-content {
+  border: 2px solid #c1c1c1;
+  padding: 15px;
 }
 </style>

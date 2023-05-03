@@ -1,6 +1,6 @@
 <template>
   <div id="modal_update_profile" uk-modal>
-    <div class="uk-modal-dialog">
+    <div class="uk-modal-dialog uk-border-rounded uk-overflow-hidden">
       <button class="uk-modal-close-default" type="button" uk-close></button>
       <div class="uk-modal-header">
         <h2 class="uk-modal-title">Изменить профиль</h2>
@@ -11,7 +11,7 @@
           <div class="uk-margin">
             <label class="uk-form-label" for="user_name">Имя</label>
             <div class="uk-form-controls">
-              <input v-model.trim="$v.name.$model" class="uk-input" :class="{ 'uk-form-danger': $v.name.$error, }" id="user_name" type="text" placeholder="Имя">
+              <input v-model.trim="$v.name.$model" class="uk-input uk-border-rounded" :class="{ 'uk-form-danger': $v.name.$error, }" id="user_name" type="text" placeholder="Имя">
               <div class="uk-text-danger" v-if="$v.name.$dirty && !$v.name.required">Имя обязательно</div>
               <div class="uk-text-danger" v-if="!$v.name.minLength">Имя должно быть не менее {{$v.name.$params.minLength.min}} символов</div>
             </div>
@@ -20,7 +20,7 @@
           <div class="uk-margin">
             <label class="uk-form-label" for="user_email">Эл. почта</label>
             <div class="uk-form-controls">
-              <input class="uk-input" v-model.trim="$v.email.$model" :class="{ 'uk-form-danger': $v.email.$error }" id="user_email" type="text" placeholder="Эл.почта">
+              <input class="uk-input uk-border-rounded" v-model.trim="$v.email.$model" :class="{ 'uk-form-danger': $v.email.$error }" id="user_email" type="text" placeholder="Эл.почта">
               <div class="uk-text-danger" v-if="$v.email.$dirty && !$v.email.required">Эл. почта должна быть обязательно</div>
               <div class="uk-text-danger" v-if="!$v.email.email">Не выглядит как почта</div>
             </div>
@@ -29,7 +29,7 @@
           <div class="uk-margin">
             <label class="uk-form-label" for="old_password">Старый пароль</label>
             <div class="uk-form-controls">
-              <input class="uk-input" v-model.trim="$v.old_password.$model" :class="{ 'uk-form-warning': $v.old_password.$error }" id="old_password" type="text" placeholder="Старый пароль">
+              <input class="uk-input uk-border-rounded" v-model.trim="$v.old_password.$model" :class="{ 'uk-form-warning': $v.old_password.$error }" id="old_password" type="text" placeholder="Старый пароль">
               <div class="uk-text-warning" v-if="!$v.old_password.required">Введите старый пароль</div>
 <!--              <div class="uk-text-danger" v-if="$v.old_password.$dirty && !$v.old_password.minLength">Пароль должен быть не менее 6 символов</div>-->
             </div>
@@ -39,7 +39,7 @@
 
             <label class="uk-form-label" for="password">Новый пароль</label>
             <div class="uk-form-controls">
-              <input class="uk-input" v-model.trim="$v.password.$model" :class="{ 'uk-form-warning': $v.password.$error }" id="password" type="text" placeholder="Новый пароль">
+              <input class="uk-input uk-border-rounded" v-model.trim="$v.password.$model" :class="{ 'uk-form-warning': $v.password.$error }" id="password" type="text" placeholder="Новый пароль">
               <div class="uk-text-warning" v-if="!$v.password.required">А теперь введите новый пароль</div>
               <div class="uk-text-warning" v-if="!$v.password.minLength">Он должен быть не менее {{$v.password.$params.minLength.min}} символов</div>
             </div>
@@ -48,7 +48,7 @@
           <div v-if="old_password && password || password_confirm" class="uk-margin">
             <label class="uk-form-label" for="password_confirm">Подтверждение пароля</label>
             <div class="uk-form-controls">
-              <input class="uk-input" v-model.trim="$v.password_confirm.$model" :class="{ 'uk-form-warning': $v.password_confirm.$error }" id="password_confirm" type="text" placeholder="Подтвердите новый пароль">
+              <input class="uk-input uk-border-rounded" v-model.trim="$v.password_confirm.$model" :class="{ 'uk-form-warning': $v.password_confirm.$error }" id="password_confirm" type="text" placeholder="Подтвердите новый пароль">
               <div class="uk-text-warning" v-if="!$v.password_confirm.required">Введите еще раз для запоминания</div>
               <div class="uk-text-warning" v-if="$v.password_confirm.required && !$v.password_confirm.sameAsPassword">Пароли не совпадают</div>
             </div>
@@ -58,8 +58,8 @@
         </form>
       </div>
       <div class="uk-modal-footer uk-text-right">
-        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-        <button class="uk-button uk-button-primary" @click.prevent="update_profile" type="button">Обновить профиль</button>
+        <button class="uk-button uk-button-default uk-modal-close uk-margin-right" type="button">Cancel</button>
+        <button class="uk-button uk-button-primary " @click.prevent="update_profile" type="button">Обновить профиль</button>
       </div>
     </div>
   </div>

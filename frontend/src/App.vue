@@ -24,6 +24,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~uikit/dist/css/uikit.min.css';
-@import './assets/custom';
+@import './styles/index.scss';
 </style>

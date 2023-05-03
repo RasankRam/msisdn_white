@@ -52,7 +52,7 @@ class UserController extends Controller
     $user = User::where('email', $request->email)->first();
 
     if (!$user) {
-      return $this->makeErrorResponse('incorrect username or password', 401);
+      return $this->makeErrorResponse('incorrect email or password', 401);
     }
 
     if (Hash::check($request->password,$user->password)) {
@@ -68,7 +68,7 @@ class UserController extends Controller
       ]);
 
     } else {
-      return $this->makeErrorResponse('incorrect username or password', 401);
+      return $this->makeErrorResponse('incorrect email or password', 401);
     }
   }
 

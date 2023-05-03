@@ -1,13 +1,16 @@
 version: '3.7'
 
 services:
-  php:
+  workspace:
     volumes:
       - ${BACKEND_PATH_HOST}:/var/www/backend
+      - ${FRONTEND_PATH_HOST}:/var/www/frontend
       - ${PHP_PATH_HOST}/local.ini:/usr/local/etc/php/conf.d/local.ini
     build:
       context: ./
       dockerfile: ${PHP_PATH_HOST}/Dockerfile
+    ports:
+      - "8085:8080"
     user: 1000:1000 # Без этого контейнер как root запускается
     restart: unless-stopped
     tty: true
@@ -41,7 +44,7 @@ services:
     ports:
       - ${WEB_HTTP_PORT}:80
     depends_on:
-      - php
+      - workspace
     networks:
       - app-network
 

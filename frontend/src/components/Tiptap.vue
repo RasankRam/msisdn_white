@@ -1,14 +1,17 @@
 <template>
   <div>
-    <div class="editor" v-if="editor">
-      <menu-bar class="editor__header" :editor="editor" />
-      <editor-content class="editor__content" :editor="editor" />
+    <div class="editor uk-position-relative" v-if="editor">
+      <menu-bar v-if="active" class="uk-position-absolute editor__header uk-border-rounded" :editor="editor" />
+      <editor-content class="editor__content" :class="{ 'uk-border-rounded': !active }" :editor="editor" />
+      <div v-if="active" class="editor-actions uk-border-rounded">
+        <a class="change_main_content uk-border-rounded" @click.prevent="setContentBlockQuery('main_content', editor.getHTML())">Сохранить изменения</a>
+      </div>
     </div>
-    <a class="change_main_content" @click.prevent="set_content_block_query('main_content', editor.getHTML())">Сохранить изменения</a>
   </div>
 </template>
 
 <script>
+import {watch, onMounted, ref, onUnmounted} from 'vue';
 import { Editor, EditorContent } from '@tiptap/vue-2'
 import StarterKit from '@tiptap/starter-kit'
 import TaskList from '@tiptap/extension-task-list'
@@ -16,60 +19,80 @@ import TaskItem from '@tiptap/extension-task-item'
 import Highlight from '@tiptap/extension-highlight'
 import CharacterCount from '@tiptap/extension-character-count'
 import MenuBar from './MenuBar.vue'
+import store from '@/store';
 
 export default {
   components: {
     EditorContent,
     MenuBar,
   },
-
-  data() {
-    return {
-      editor: null,
-    }
+  props: {
+    active: {
+      type: Boolean,
+      default: false,
+    },
   },
+  setup(props, { emit }) {
+    const editor = ref(null);
 
-  mounted() {
-
-    this.editor = new Editor({
-      content: this.$store.getters.content.find(item => item.block === 'main_content').content,
-      onUpdate: (value) => {
-        this.$store.dispatch('set_content_block', { block: 'main_content', content: value.editor.getHTML()})
+    watch(
+      () => props.active,
+      (v) => {
+        if (editor.value) editor.value.setOptions({ editable: v });
       },
-      extensions: [
-        StarterKit.configure({
-          history: false,
-        }),
-        Highlight,
-        TaskList,
-        TaskItem,
-        CharacterCount.configure({
-          limit: 10000,
-        }),
-      ],
+    );
+
+    onMounted(() => {
+      editor.value = new Editor({
+        editable: false,
+        content: store.getters.content.find(item => item.block === 'main_content').content,
+        onUpdate: (value) => {
+          store.dispatch('set_content_block', { block: 'main_content', content: value.editor.getHTML() })
+        },
+        extensions: [
+          StarterKit.configure({
+            history: false,
+          }),
+          Highlight,
+          TaskList,
+          TaskItem,
+          CharacterCount.configure({
+            limit: 10000,
+          }),
+        ]
+      })
     })
-  },
 
-  methods: {
-    set_content_block_query(block, content) {
-      this.$store.dispatch('set_content_block_query', {block, content})
-          .then(() => {
-            // eslint-disable-next-line no-undef
-            UIkit.notification('Вы успешно отредактировали заголовок!', {status: 'success', timeout: 2000})
-            this.$emit('change_wysiwyg_visibility', false)
-          })
-          // eslint-disable-next-line no-undef
-          .catch(() => UIkit.notification('Что-то пошло не так', {status: 'warning', timeout: 2000}))
+    onUnmounted(() => {
+      editor.value.destroy();
+    })
+
+    const setContentBlockQuery = async (block, content) => {
+      try {
+        await store.dispatch('set_content_block_query', { block, content });
+        window.UIkit.notification('Вы успешно отредактировали заголовок!', {status: 'success', timeout: 2000})
+        emit('update:active', false);
+      } catch (err) {
+        console.log('err', err);
+        window.UIkit.notification('Что-то пошло не так', {status: 'warning', timeout: 2000})
+      }
     }
-  },
 
-  beforeDestroy() {
-    this.editor.destroy()
+    return { setContentBlockQuery, editor }
   },
 }
 </script>
 
 <style lang="scss" scoped>
+.editor-actions {
+  padding: 6px 5px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border: 2px solid #afafaf;
+  border-top:0;
+}
+
+
 /* Custom */
 
 .change_main_content {
@@ -78,9 +101,7 @@ export default {
   border: 1px solid #7C7C7C;
   padding: 3px 7px;
   position: relative;
-  margin-top: -5px;
-  top: -26px;
-  border-radius: 0 0 0 10px;
+  border-radius: 0 0 0 4px;
 }
 
 .change_main_content:hover {
@@ -96,20 +117,30 @@ export default {
   //max-height: 400px;
   //color: #0D0D0D;
   //background-color: white;
-  border: 3px solid #0D0D0D;
+  //border: 3px solid #0D0D0D;
   border-radius: 0.75rem;
 
   &__header {
+    bottom: 100%;
+    left:0;
+    right:0;
     display: flex;
     align-items: center;
     flex: 0 0 auto;
     flex-wrap: wrap;
     padding: 0.25rem;
-    border-bottom: 3px solid #0D0D0D;
+    border: 2px solid #afafaf;
+    border-bottom:none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   &__content {
-    padding: 1.25rem 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.8rem;
+    padding-bottom: 1.25rem;
+    border: 2px solid #afafaf;
     flex: 1 1 auto;
     overflow-x: hidden;
     overflow-y: auto;

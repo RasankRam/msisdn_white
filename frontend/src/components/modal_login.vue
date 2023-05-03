@@ -6,7 +6,7 @@
         <div class="uk-modal-title uk-text-center">Вход</div>
       </div>
       <div class="uk-modal-body">
-        <form @submit.prevent="sign_in">
+        <form @submit.prevent="signIn">
           <div class="uk-margin">
             <div class="uk-inline uk-width-1-1">
               <span class="uk-form-icon" uk-icon="icon: mail"></span>
@@ -35,16 +35,10 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 import {email, required} from "vuelidate/lib/validators";
 
 export default {
-  name: "modal_login",
-  data() {
-    return {
-      email : '',
-      password : ''
-    }
-  },
   validations: {
     email: {
       required,
@@ -54,8 +48,17 @@ export default {
       required,
     }
   },
+  setup() {
+    const email = ref(null);
+    const password = ref(null);
+
+    return {
+      email,
+      password,
+    };
+  },
   methods: {
-    sign_in() {
+    signIn() {
       if (this.$v.$invalid) {
         this.$v.$touch() // активизируем валидацию
         return

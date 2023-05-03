@@ -2,6 +2,7 @@ FROM php:7.4-fpm
 
 # Install moduels
 RUN apt-get update && apt-get install -y \
+    net-tools \
     git \
     zip \
     unzip \
@@ -16,6 +17,12 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Install nodejs 16
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+RUN npm install -g yarn
+RUN yarn global add @vue/cli
+
 # if need switching to root -> set password
 RUN echo 'root:root' | chpasswd
 
@@ -23,10 +30,10 @@ RUN echo 'root:root' | chpasswd
 RUN useradd -ms /bin/bash joonix
 
 # Set the working directory
-WORKDIR /var/www/backend
+WORKDIR /var/www
 
 # Expose port 9000
-EXPOSE 8000
+EXPOSE 9000
 # Start the PHP-FPM server
 CMD ["php-fpm"]
 

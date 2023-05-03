@@ -45,4 +45,6 @@ Route::patch('/pages', [ContentController::class, 'update']);
 
 Route::get('reset', [MainController::class,"reset"]);
 
-Route::post('update_profile', [UserController::class, "update_profile"]);
+Route::group(['middleware' => 'authenticated'], function () {
+  Route::post('update_profile', [UserController::class, "update_profile"]);
+});

@@ -1,3 +1,23 @@
+/* Tiptap styles */
+::v-deep {
+  /* Basic editor styles */
+  .ProseMirror {
+    > * + * {
+      margin-top: 0.75em;
+    }
+  }
+  .ProseMirror-focused {
+    outline: 0;
+  }
+}
+
+.ProseMirror {
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+
 .pagination .active_pagination {
   background: linear-gradient(180deg, #EFDFD6 0%, #DFD5CF 52.6%, #e8d1c4 100%);
   border: 1px solid #ACACAC;

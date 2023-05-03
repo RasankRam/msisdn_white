@@ -41,21 +41,20 @@
 import { email, required} from "vuelidate/lib/validators";
 
 export default {
-  name: "login",
   data() {
     return {
-      email : '',
-      password : ''
-    }
+      email: '',
+      password: ''
+    };
   },
   validations: {
     email: {
       required,
-      email
+      email,
     },
     password: {
       required,
-    }
+    },
   },
   methods: {
     sign_in() {

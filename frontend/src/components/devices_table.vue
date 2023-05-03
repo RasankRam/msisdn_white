@@ -11,7 +11,7 @@
         <th class="uk-text-right">Кто добавил<span uk-tooltip="Изменять можно только свои или нечейные записи!" class="info_icon" uk-icon="info"></span></th>
         <th style="width:97px;" class="uk-text-right uk-width-small">
           <label v-if="$store.getters.isAuthenticated" style="color: #7497b2;margin-right:7px;" class="filter-toggle" @click.prevent="order_by('mine','on')"><input :checked="$route.query.mine" class="uk-checkbox" type="checkbox">Мои</label>
-          <a uk-icon="settings" uk-tooltip="Отфильтровать"></a>
+          <a uk-icon="settings" uk-tooltip="Отсортировать"></a>
           <div uk-dropdown="mode: click;pos: bottom-justify">
             <ul class="uk-list uk-list-divider uk-text-left">
               <li><label class="filter-toggle" @click.prevent="order_by('title','asc')"><input :checked="$route.query.title && $route.query.title === 'asc'" class="uk-checkbox" type="checkbox">По названию устройства (алф.)</label></li>
