@@ -17,21 +17,6 @@ services:
     networks:
       - app-network
 
-  db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_DATABASE: black_list
-      MYSQL_USER: laravel_user
-      MYSQL_PASSWORD: root
-      MYSQL_ROOT_PASSWORD: root
-    volumes:
-      - ./docker/mysql/data:/var/lib/mysql
-    ports:
-      - "3307:3306"
-    networks:
-      - app-network
-
   nginx:
     image: nginx:alpine
     tty: true
