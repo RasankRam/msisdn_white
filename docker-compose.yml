@@ -13,6 +13,8 @@ services:
       - "8085:8080"
     user: 1000:1000 # Без этого контейнер как root запускается
     restart: unless-stopped
+    extra_hosts:
+      - host.docker.internal:host-gateway
     tty: true
     networks:
       - app-network
