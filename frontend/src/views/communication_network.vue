@@ -5,16 +5,10 @@
       <hr style="margin-top:15px;margin-bottom:40px;" class="uk-grid-divider">
       <div class="uk-margin uk-text-right uk-position-relative">
         <button id="edit_title_btn" v-visible="!wysiwyg_visibility" @click="wysiwyg_visibility = !wysiwyg_visibility"
-                class="uk-button uk-button-default uk-border-rounded">123Изменить заголовок</button>
+                class="uk-button uk-button-default uk-border-rounded">Изменить заголовок</button>
       </div>
 
       <tiptap style="margin-left: -19.2px;" :active.sync="wysiwyg_visibility" @change_wysiwyg_visibility="change_wysiwyg_visibility" class="uk-margin-medium-bottom" />
-
-<!--      <div v-visible="!wysiwyg_visibility" class="page-content uk-margin-medium-bottom uk-border-rounded">-->
-<!--        <div v-html="content.find(item => item.block === 'main_content').content"></div>-->
-<!--      </div>-->
-
-<!--      <div v-html="main_content"></div>-->
 
       <div :style="{'margin-top': wysiwyg_visibility ? '67px' : '0'}" class="uk-grid">
         <div class="uk-width-1-2">
